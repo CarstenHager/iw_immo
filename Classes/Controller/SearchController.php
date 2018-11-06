@@ -23,36 +23,35 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-	namespace IWAG\IwImmo\Controller;
-	use TYPO3\CMS\Core\Utility\GeneralUtility;
+    namespace IWAG\IwImmo\Controller;
+    use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-	/**
-	 * Class SearchController
-	 *
-	 * @package IWAG\IwImmo\Controller
-	 */
-	class SearchController extends BaseController {
+    /**
+     * Class SearchController
+     *
+     * @package IWAG\IwImmo\Controller
+     */
+    class SearchController extends BaseController {
 
-		/**
-		 *
-		 */
-		public function indexAction() {
-			try {
-				/** @var \IWAG\IwImmo\Service\Geo\AutocompleteService $autocompleteService */
-				$autocompleteService = $this->objectManager->get('IWAG\\IwImmo\\Service\\Geo\\AutocompleteService');
+        /**
+         *
+         */
+        public function indexAction() {
+            try {
+                /** @var \IWAG\IwImmo\Service\Geo\AutocompleteService $autocompleteService */
+                $autocompleteService = $this->objectManager->get('IWAG\\IwImmo\\Service\\Geo\\AutocompleteService');
 
-				$autocompleteService->setCountryGeoId($this->settings['list']['parameters']['geoid']);
+                $autocompleteService->setCountryGeoId($this->settings['list']['parameters']['geoid']);
 
-			} catch (\Exception $e) {
-				$autocompleteService = NULL;
+            } catch (\Exception $e) {
+                $autocompleteService = NULL;
+                $this->logger->error($e->getCode() . ': ' . $e->getMessage());
+            }
 
-				GeneralUtility::sysLog($e->getCode() . ': ' . $e->getMessage(), $this->extensionName, GeneralUtility::SYSLOG_SEVERITY_ERROR);
-			}
-
-			$this->view->assign('autocompleteService', $autocompleteService);
-		}
+            $this->view->assign('autocompleteService', $autocompleteService);
+        }
 
 
-	}
+    }
 
-	?>
+    ?>

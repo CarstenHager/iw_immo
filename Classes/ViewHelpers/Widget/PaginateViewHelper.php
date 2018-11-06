@@ -31,28 +31,22 @@ if (!defined('TYPO3_MODE')) die ('Access denied.');
 class PaginateViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper
 {
     /**
-     * @var \IWAG\IwImmo\ViewHelpers\Widget\Controller\PaginateController
-     * @inject
+     * @var PaginateController
      */
     protected $controller;
 
-    /**
-     * @param \IWAG\IwImmo\ViewHelpers\Widget\Controller\PaginateController $controller
-     */
-    public function injectController(PaginateController $controller)
+    public function injectPaginateController(PaginateController $controller)
     {
         $this->controller = $controller;
     }
 
-    /**
-     * @param AbstractListsService $objects
-     * @param string $as
-     * @param array $configuration
-     *
-     * @return string|\TYPO3\CMS\Extbase\Mvc\ResponseInterface
-     * @throws \TYPO3\CMS\Fluid\Core\Widget\Exception\MissingControllerException
-     */
-    public function render(AbstractListsService $objects, $as, array $configuration = array('itemsPerPage' => 10, 'insertAbove' => FALSE, 'insertBelow' => TRUE, 'maximumNumberOfLinks' => 99))
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->overrideArgument('objects', AbstractListsService::class, 'Object', true);
+    }
+
+    public function render()
     {
         return $this->initiateSubRequest();
     }

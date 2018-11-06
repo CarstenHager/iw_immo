@@ -1,5 +1,12 @@
-page.includeCSS {
-    iwimmo = EXT:iw_immo/Resources/Public/Css/iwimmo.css
+page {
+    includeCSS {
+        iwimmo = EXT:iw_immo/Resources/Public/Css/iwimmo.css
+    }
+
+    includeJSFooter {
+        iwimmo_fc = EXT:iw_immo/Resources/Public/Js/Fc.js
+        iwimmo_slideshow = EXT:iw_immo/Resources/Public/Js/SlideShow.js
+    }
 }
 
 plugin.tx_iwimmo {

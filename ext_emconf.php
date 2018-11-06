@@ -1,11 +1,7 @@
 <?php
 
-########################################################################
-# Extension Manager/Repository config file for ext "iw_immo".
-########################################################################
-
-$EM_CONF[$_EXTKEY] = array(
-    'version'                       => '1.1.7',
+$EM_CONF[$_EXTKEY] = [
+    'version'                       => '1.2.7',
     'title'                         => 'IwImmo',
     'description'                   => 'Immowelt Extension',
     'category'                      => 'plugin',
@@ -26,14 +22,14 @@ $EM_CONF[$_EXTKEY] = array(
     'author_company'                => 'Immowelt AG',
     'CGLcompliance'                 => '',
     'CGLcompliance_note'            => '',
-    'constraints'                   => array(
-        'depends'   => array(
-            'typo3'        => '6.2.0-7.6.99',
-        ),
-        'conflicts' => array(),
-    ),
-    '_md5_values_when_last_written' => '',
-    'suggests'                      => array(),
-);
-
-?>
+    'constraints'                   => [
+        'depends'   => [
+            'typo3'        => '9.5.0-9.5.99',
+        ],
+    ],
+    'autoload' => [
+        'psr-4' => [
+            'IWAG\\IwImmo\\' => 'Classes',
+        ],
+    ],
+];
