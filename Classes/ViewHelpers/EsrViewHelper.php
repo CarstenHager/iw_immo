@@ -3,7 +3,7 @@
 namespace IWAG\IwImmo\ViewHelpers;
 
 use IWAG\IwImmo\Utility\ImmoUtility;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 if (!defined('TYPO3_MODE')) {
   die ('Access denied.');
@@ -36,7 +36,7 @@ class EsrViewHelper extends AbstractViewHelper {
   /**
    * @return array
    */
-  public function render() {
+  public function render(): array {
     return ImmoUtility::getEsr();
   }
 

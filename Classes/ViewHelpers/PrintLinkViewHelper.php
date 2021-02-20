@@ -25,7 +25,7 @@
 namespace IWAG\IwImmo\ViewHelpers;
 
 
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
  * Class PrintLinkViewHelper

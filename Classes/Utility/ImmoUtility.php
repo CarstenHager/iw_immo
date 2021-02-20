@@ -2,6 +2,7 @@
 
 namespace IWAG\IwImmo\Utility;
 
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -104,10 +105,10 @@ class ImmoUtility {
   }
 
   /**
-   * @return \TYPO3\CMS\Extbase\Service\TypoScriptService
+   * @return \TYPO3\CMS\Core\TypoScript\TypoScriptService
    */
-  protected static function getTypoScriptService() {
-    /** @var \TYPO3\CMS\Extbase\Service\TypoScriptService $typoscriptService */
+  protected static function getTypoScriptService(): TypoScriptService {
+    /** @var \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoscriptService */
     static $typoscriptService = NULL;
     if ($typoscriptService == NULL) {
       $typoscriptService = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Service\TypoScriptService');
