@@ -1,236 +1,238 @@
 <?php
-    /***************************************************************
-    *  Copyright notice
-    *
-    *  (c) 2016 Immowelt AG <support@immowelt.de>
-    *  All rights reserved
-    *
-    *  This script is part of the TYPO3 project. The TYPO3 project is
-    *  free software; you can redistribute it and/or modify
-    *  it under the terms of the GNU General Public License as published by
-    *  the Free Software Foundation; either version 2 of the License, or
-    *  (at your option) any later version.
-    *
-    *  The GNU General Public License can be found at
-    *  http://www.gnu.org/copyleft/gpl.html.
-    *
-    *  This script is distributed in the hope that it will be useful,
-    *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-    *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    *  GNU General Public License for more details.
-    *
-    *  This copyright notice MUST APPEAR in all copies of the script!
-    ***************************************************************/
-	namespace IWAG\IwImmo\ResultObjects\Lists\Properties;
+/***************************************************************
+ *  Copyright notice
+ *
+ *  (c) 2016 Immowelt AG <support@immowelt.de>
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
-    use IWAG\IwImmo\ResultObjects\AbstractResultProperty;
+namespace IWAG\IwImmo\ResultObjects\Lists\Properties;
 
-	if (!defined ('TYPO3_MODE')) die ('Access denied.');
+use IWAG\IwImmo\ResultObjects\AbstractResultProperty;
 
-	/**
-	 * Class PriceValues
-	 *
-	 * @package IWAG\IwImmo\Domain\Model\Property
-	 */
-	class PriceValues extends AbstractResultProperty {
+if (!defined('TYPO3_MODE')) {
+  die ('Access denied.');
+}
 
-		/**
-		 * @var string currency
-		 */
-		protected $currency;
+/**
+ * Class PriceValues
+ *
+ * @package IWAG\IwImmo\Domain\Model\Property
+ */
+class PriceValues extends AbstractResultProperty {
 
-		/**
-		 * Setzt Variable currency
-		 *
-		 * @param string $currency
-		 *
-		 * @return self
-		 *
-		 */
-		public function setCurrency($currency) {
-			$this->currency = $currency;
+  /**
+   * @var string currency
+   */
+  protected $currency;
 
-			return $this;
-		}
+  /**
+   * @var int price
+   */
+  protected $price;
 
-		/**
-		 * Liefert die Variable currency
-		 *
-		 * @return string
-		 */
-		public function getCurrency() {
-			return $this->currency;
-		}
+  /**
+   * @var bool priceSpecified
+   */
+  protected $priceSpecified;
 
-		/**
-		 * @return string
-		 */
-		public function getCurrencySymbol() {
+  /**
+   * @var string priceText
+   */
+  protected $priceText;
 
-			$symbol = '';
+  // ****************************************************************************
 
-			switch($this->currency) {
-				case 'EUR':
-					$symbol = '€';
-					break;
+  /**
+   * @var int sqareMeterPrice
+   */
+  protected $sqareMeterPrice;
 
-			}
+  /**
+   * @var bool sqareMeterPriceSpecified
+   */
+  protected $sqareMeterPriceSpecified;
 
-			return $symbol;
-		}
+  /**
+   * Liefert die Variable currency
+   *
+   * @return string
+   */
+  public function getCurrency() {
+    return $this->currency;
+  }
 
-		// ****************************************************************************
+  // ****************************************************************************
 
-		/**
-		 * @var int price
-		 */
-		protected $price;
+  /**
+   * Setzt Variable currency
+   *
+   * @param string $currency
+   *
+   * @return self
+   *
+   */
+  public function setCurrency($currency) {
+    $this->currency = $currency;
 
-		/**
-		 * Setzt Variable price
-		 *
-		 * @param int $price
-		 *
-		 * @return self
-		 *
-		 */
-		public function setPrice($price) {
-			$this->price = $price;
+    return $this;
+  }
 
-			return $this;
-		}
+  /**
+   * @return string
+   */
+  public function getCurrencySymbol() {
 
-		/**
-		 * Liefert die Variable price
-		 *
-		 * @return int
-		 */
-		public function getPrice() {
-			return $this->price;
-		}
+    $symbol = '';
 
-		// ****************************************************************************
+    switch ($this->currency) {
+      case 'EUR':
+        $symbol = '€';
+        break;
 
-		/**
-		 * @var bool priceSpecified
-		 */
-		protected $priceSpecified;
+    }
 
-		/**
-		 * Setzt Variable priceSpecified
-		 *
-		 * @param bool $priceSpecified
-		 *
-		 * @return self
-		 *
-		 */
-		public function setPriceSpecified($priceSpecified) {
-			$this->priceSpecified = $priceSpecified;
+    return $symbol;
+  }
 
-			return $this;
-		}
+  /**
+   * Liefert die Variable price
+   *
+   * @return int
+   */
+  public function getPrice() {
+    return $this->price;
+  }
 
-		/**
-		 * Liefert die Variable priceSpecified
-		 *
-		 * @return bool
-		 */
-		public function getPriceSpecified() {
-			return $this->priceSpecified;
-		}
+  // ****************************************************************************
 
-		// ****************************************************************************
+  /**
+   * Setzt Variable price
+   *
+   * @param int $price
+   *
+   * @return self
+   *
+   */
+  public function setPrice($price) {
+    $this->price = $price;
 
-		/**
-		 * @var string priceText
-		 */
-		protected $priceText;
+    return $this;
+  }
 
-		/**
-		 * Setzt Variable priceText
-		 *
-		 * @param string $priceText
-		 *
-		 * @return self
-		 *
-		 */
-		public function setPriceText($priceText) {
-			$this->priceText = $priceText;
+  /**
+   * Liefert die Variable priceSpecified
+   *
+   * @return bool
+   */
+  public function getPriceSpecified() {
+    return $this->priceSpecified;
+  }
 
-			return $this;
-		}
+  /**
+   * Setzt Variable priceSpecified
+   *
+   * @param bool $priceSpecified
+   *
+   * @return self
+   *
+   */
+  public function setPriceSpecified($priceSpecified) {
+    $this->priceSpecified = $priceSpecified;
 
-		/**
-		 * Liefert die Variable priceText
-		 *
-		 * @return string
-		 */
-		public function getPriceText() {
-			return $this->priceText;
-		}
+    return $this;
+  }
 
-		// ****************************************************************************
+  // ****************************************************************************
 
-		/**
-		 * @var int sqareMeterPrice
-		 */
-		protected $sqareMeterPrice;
+  /**
+   * Liefert die Variable priceText
+   *
+   * @return string
+   */
+  public function getPriceText() {
+    return $this->priceText;
+  }
 
-		/**
-		 * Setzt Variable sqareMeterPrice
-		 *
-		 * @param int $sqareMeterPrice
-		 *
-		 * @return self
-		 *
-		 */
-		public function setSqareMeterPrice($sqareMeterPrice) {
-			$this->sqareMeterPrice = $sqareMeterPrice;
+  /**
+   * Setzt Variable priceText
+   *
+   * @param string $priceText
+   *
+   * @return self
+   *
+   */
+  public function setPriceText($priceText) {
+    $this->priceText = $priceText;
 
-			return $this;
-		}
+    return $this;
+  }
 
-		/**
-		 * Liefert die Variable sqareMeterPrice
-		 *
-		 * @return int
-		 */
-		public function getSqareMeterPrice() {
-			return $this->sqareMeterPrice;
-		}
+  /**
+   * Liefert die Variable sqareMeterPrice
+   *
+   * @return int
+   */
+  public function getSqareMeterPrice() {
+    return $this->sqareMeterPrice;
+  }
 
-		// ****************************************************************************
+  // ****************************************************************************
 
-		/**
-		 * @var bool sqareMeterPriceSpecified
-		 */
-		protected $sqareMeterPriceSpecified;
+  /**
+   * Setzt Variable sqareMeterPrice
+   *
+   * @param int $sqareMeterPrice
+   *
+   * @return self
+   *
+   */
+  public function setSqareMeterPrice($sqareMeterPrice) {
+    $this->sqareMeterPrice = $sqareMeterPrice;
 
-		/**
-		 * Setzt Variable sqareMeterPriceSpecified
-		 *
-		 * @param bool $sqareMeterPriceSpecified
-		 *
-		 * @return self
-		 *
-		 */
-		public function setSqareMeterPriceSpecified($sqareMeterPriceSpecified) {
-			$this->sqareMeterPriceSpecified = $sqareMeterPriceSpecified;
+    return $this;
+  }
 
-			return $this;
-		}
+  /**
+   * Liefert die Variable sqareMeterPriceSpecified
+   *
+   * @return bool
+   */
+  public function getSqareMeterPriceSpecified() {
+    return $this->sqareMeterPriceSpecified;
+  }
 
-		/**
-		 * Liefert die Variable sqareMeterPriceSpecified
-		 *
-		 * @return bool
-		 */
-		public function getSqareMeterPriceSpecified() {
-			return $this->sqareMeterPriceSpecified;
-		}
+  /**
+   * Setzt Variable sqareMeterPriceSpecified
+   *
+   * @param bool $sqareMeterPriceSpecified
+   *
+   * @return self
+   *
+   */
+  public function setSqareMeterPriceSpecified($sqareMeterPriceSpecified) {
+    $this->sqareMeterPriceSpecified = $sqareMeterPriceSpecified;
 
-		// ****************************************************************************
+    return $this;
+  }
+
+  // ****************************************************************************
 
 
-	}
-?>
+}

@@ -1,79 +1,86 @@
 <?php
-    if (!defined('TYPO3_MODE')) {
-        die ('Access denied.');
-    }
+
+use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
+if (!defined('TYPO3_MODE')) {
+  die ('Access denied.');
+}
 
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain']) || empty($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain'] = 'http://api.immowelt.de';
-    }
+if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain']) || empty($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain'])) {
+  $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain'] = 'http://api.immowelt.de';
+}
 
-    try {
-        $confArr = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)
-            ->get('iw_immo');
-    } catch (\TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException $e) {
-        $confArr = [];
-    }
+try {
+  $confArr = GeneralUtility::makeInstance(ExtensionConfiguration::class)
+    ->get('iw_immo');
+} catch (ExtensionConfigurationExtensionNotConfiguredException $e) {
+  $confArr = [];
+}
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'IWAG.' . $_EXTKEY,
-        'search',
-        array(
-            'Search' => 'index',
-        ),
-        array(
-            'Search' => 'index',
-        )
-    );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'IWAG.' . $_EXTKEY,
-        'list',
-        array(
-            'List' => 'index',
-        ),
-        array(
-            'List' => 'index',
-        )
-    );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'IWAG.' . $_EXTKEY,
-        'detail',
-        array(
-            'Detail' => 'show',
-        ),
-        array(
-            'Detail' => 'show',
-        )
-    );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'IWAG.' . $_EXTKEY,
-        'contact',
-        array(
-            'Contact' => 'index,confirmation,send',
-        ),
-        array(
-            'Contact' => 'index,confirmation,send',
-        )
-    );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'IWAG.' . $_EXTKEY,
-        'calculator',
-        array(
-            'Calculator' => 'index',
-        ),
-        array(
-            'Calculator' => 'index',
-        )
-    );
+ExtensionUtility::configurePlugin(
+  'IWAG.' . $_EXTKEY,
+  'search',
+  [
+    'Search' => 'index',
+  ],
+  [
+    'Search' => 'index',
+  ]
+);
+ExtensionUtility::configurePlugin(
+  'IWAG.' . $_EXTKEY,
+  'list',
+  [
+    'List' => 'index',
+  ],
+  [
+    'List' => 'index',
+  ]
+);
+ExtensionUtility::configurePlugin(
+  'IWAG.' . $_EXTKEY,
+  'detail',
+  [
+    'Detail' => 'show',
+  ],
+  [
+    'Detail' => 'show',
+  ]
+);
+ExtensionUtility::configurePlugin(
+  'IWAG.' . $_EXTKEY,
+  'contact',
+  [
+    'Contact' => 'index,confirmation,send',
+  ],
+  [
+    'Contact' => 'index,confirmation,send',
+  ]
+);
+ExtensionUtility::configurePlugin(
+  'IWAG.' . $_EXTKEY,
+  'calculator',
+  [
+    'Calculator' => 'index',
+  ],
+  [
+    'Calculator' => 'index',
+  ]
+);
 
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain']) || empty($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain'] = 'http://api.immowelt.de';
-    }
+if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain']) || empty($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain'])) {
+  $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain'] = 'http://api.immowelt.de';
+}
 
-    if ($confArr['includeJQueryUI'] != 0) {
+if ($confArr['includeJQueryUI'] != 0) {
 
-        if ($confArr['includeJQueryUILocalization'] == 1) {
-            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
+  if ($confArr['includeJQueryUILocalization'] == 1) {
+    ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
             page.includeJSlibs {
                 #jqueryUIlocalization = https://ajax.aspnetcdn.com/ajax/jquery.ui/' . trim($confArr['includeJQueryUI']) . '/i18n/jquery-ui-i18n.min.js
                 jqueryUIlocalization = //ajax.googleapis.com/ajax/libs/jqueryui/' . trim($confArr['includeJQueryUI']) . '/i18n/jquery-ui-i18n.min.js
@@ -84,10 +91,10 @@
                 jqueryUIlocalization.disableCompression = 1
             }
         ');
-        }
+  }
 
-        if ($confArr['includeJQueryUIStyles'] == 1) {
-            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
+  if ($confArr['includeJQueryUIStyles'] == 1) {
+    ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
             page.includeCSS {
                 #jqueryUiStyles = http://code.jquery.com/ui/' . trim($confArr['includeJQueryUI']) . '/themes/smoothness/jquery-ui.css
                 jqueryUiStyles = //ajax.googleapis.com/ajax/libs/jqueryui/' . trim($confArr['includeJQueryUI']) . '/themes/smoothness/jquery-ui.css
@@ -96,9 +103,9 @@
                 jqueryUiStyles.disableCompression = 1
             }
         ');
-        }
+  }
 
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
+  ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
             page.includeJSlibs {
                 #jqueryUI = http://ajax.aspnetcdn.com/ajax/jquery.ui/' . trim($confArr['includeJQueryUI']) . '/jquery-ui.min.js
                 jqueryUI = //ajax.googleapis.com/ajax/libs/jqueryui/' . trim($confArr['includeJQueryUI']) . '/jquery-ui.min.js
@@ -109,11 +116,11 @@
                 jqueryUI.disableCompression = 1
             }
         ');
-    }
+}
 
-    // jQuery Validation einbinden
-    if ($confArr['includeJQueryValidation'] != 0) {
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
+// jQuery Validation einbinden
+if ($confArr['includeJQueryValidation'] != 0) {
+  ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
             page.includeJSlibs {
                 # das gibts nur von MS
                 jqueryValidation = //ajax.aspnetcdn.com/ajax/jquery.validate/' . trim($confArr['includeJQueryValidation']) . '/jquery.validate.min.js
@@ -124,10 +131,10 @@
                 jqueryValidation.disableCompression = 1
             }
         ');
-    }
+}
 
-    if ($confArr['includeJQuery'] != 0) {
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
+if ($confArr['includeJQuery'] != 0) {
+  ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
             page.includeJSlibs {
                 #jquery = http://ajax.aspnetcdn.com/ajax/jQuery/jquery-' . trim($confArr['includeJQuery']) . '.min.js
                 jquery = //ajax.googleapis.com/ajax/libs/jquery/' . trim($confArr['includeJQuery']) . '/jquery.min.js
@@ -138,16 +145,15 @@
                 jquery.disableCompression = 1
             }
         ');
-    }
+}
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter('IWAG\IwImmo\Property\TypeConverter\ListsSearchDemandConverter');
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter('IWAG\IwImmo\Property\TypeConverter\ExposeConverter');
+ExtensionUtility::registerTypeConverter('IWAG\IwImmo\Property\TypeConverter\ListsSearchDemandConverter');
+ExtensionUtility::registerTypeConverter('IWAG\IwImmo\Property\TypeConverter\ExposeConverter');
 
 
-    // cache registrieren für objekte
-    if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$_EXTKEY . '_api'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$_EXTKEY . '_api'] = array(
-            'backend' => '\TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend'
-        );
-    }
-?>
+// cache registrieren für objekte
+if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$_EXTKEY . '_api'])) {
+  $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$_EXTKEY . '_api'] = [
+    'backend' => '\TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend',
+  ];
+}

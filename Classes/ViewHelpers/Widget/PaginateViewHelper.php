@@ -1,10 +1,13 @@
 <?php
+
 namespace IWAG\IwImmo\ViewHelpers\Widget;
 
 use IWAG\IwImmo\Service\Lists\AbstractListsService;
 use IWAG\IwImmo\ViewHelpers\Widget\Controller\PaginateController;
 
-if (!defined('TYPO3_MODE')) die ('Access denied.');
+if (!defined('TYPO3_MODE')) {
+  die ('Access denied.');
+}
 
 /***************************************************************
  *  Copyright notice
@@ -28,28 +31,24 @@ if (!defined('TYPO3_MODE')) die ('Access denied.');
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-class PaginateViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper
-{
-    /**
-     * @var PaginateController
-     */
-    protected $controller;
+class PaginateViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
 
-    public function injectPaginateController(PaginateController $controller)
-    {
-        $this->controller = $controller;
-    }
+  /**
+   * @var PaginateController
+   */
+  protected $controller;
 
-    public function initializeArguments()
-    {
-        parent::initializeArguments();
-        $this->overrideArgument('objects', AbstractListsService::class, 'Object', true);
-    }
+  public function injectPaginateController(PaginateController $controller) {
+    $this->controller = $controller;
+  }
 
-    public function render()
-    {
-        return $this->initiateSubRequest();
-    }
+  public function initializeArguments() {
+    parent::initializeArguments();
+    $this->overrideArgument('objects', AbstractListsService::class, 'Object', TRUE);
+  }
+
+  public function render() {
+    return $this->initiateSubRequest();
+  }
+
 }
-
-?>

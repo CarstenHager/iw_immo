@@ -1,141 +1,139 @@
 <?php
-	/***************************************************************
-	 *  Copyright notice
-	 *
-	 *  (c) 2016 Immowelt AG <support@immowelt.de>
-	 *  All rights reserved
-	 *
-	 *  This script is part of the TYPO3 project. The TYPO3 project is
-	 *  free software; you can redistribute it and/or modify
-	 *  it under the terms of the GNU General Public License as published by
-	 *  the Free Software Foundation; either version 2 of the License, or
-	 *  (at your option) any later version.
-	 *
-	 *  The GNU General Public License can be found at
-	 *  http://www.gnu.org/copyleft/gpl.html.
-	 *
-	 *  This script is distributed in the hope that it will be useful,
-	 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-	 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	 *  GNU General Public License for more details.
-	 *
-	 *  This copyright notice MUST APPEAR in all copies of the script!
-	 ***************************************************************/
+/***************************************************************
+ *  Copyright notice
+ *
+ *  (c) 2016 Immowelt AG <support@immowelt.de>
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
-	namespace IWAG\IwImmo\Service\Expose;
+namespace IWAG\IwImmo\Service\Expose;
 
-	use IWAG\IwImmo\Service\Exception\ServiceException;
-	use TYPO3\CMS\Core\Utility\GeneralUtility;
+use IWAG\IwImmo\Service\Exception\ServiceException;
 
-	/**
-	 * Class ExposeService
-	 *
-	 * @package IWAG\IwImmo\Service\Expose
-	 */
-	class ExposeService extends AbstractExposeService { // Es kann nur eins geben!
+/**
+ * Class ExposeService
+ *
+ * @package IWAG\IwImmo\Service\Expose
+ */
+class ExposeService extends AbstractExposeService { // Es kann nur eins geben!
 
-		/**
-		 * @var string
-		 */
-		protected $onlineId;
+  /**
+   * @var string
+   */
+  protected $onlineId;
 
-		/**
-		 * @param string $onlineId
-		 *
-		 * @return $this
-		 */
-		public function setOnlineId($onlineId) {
-			$this->onlineId = $onlineId;
+  /**
+   * @return array
+   * @throws \IWAG\IwImmo\Service\Exception\InvalidResultException
+   * @throws \IWAG\IwImmo\Service\Exception\NoConnectionException
+   */
+  public function execute() {
+    return parent::execute();
+  }
 
-			/** Workaroud weil guid kein parameter ist, sondern teil der URL */
-			$this->functionName .= '/' . $this->onlineId;
+  /**
+   * @param array $form
+   *
+   * @throws ServiceException
+   */
+  public function sendInquiry(array $form) {
 
-			return $this;
-		}
+    if (!$this->getOnlineId()) {
+      throw new ServiceException('Für die Expose-Anfrage muss eine OnlineId Gesetzt sein.', 1414489683);
+    }
 
-		/**
-		 * @return string
-		 */
-		public function getOnlineId() {
-			return $this->onlineId;
-		}
+    $ch = curl_init();
 
-		/**
-		 * @return array
-		 * @throws \IWAG\IwImmo\Service\Exception\InvalidResultException
-		 * @throws \IWAG\IwImmo\Service\Exception\NoConnectionException
-		 */
-		public function execute() {
-			return parent::execute();
-		}
+    curl_setopt_array(
+      $ch,
+      [
+        CURLOPT_URL => $this->buildRequestUrl() . '/inquiry',
+        CURLOPT_POST => 1,
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_POSTFIELDS => $this->getInquiryRequestData($form),
+        CURLOPT_HTTPHEADER => $this->getRequestHeaders(),
+      ]
+    );
 
-		/**
-		 * @param array $form
-		 *
-		 * @throws ServiceException
-		 */
-		public function sendInquiry(array $form) {
+    $result = curl_exec($ch);
 
-			if (!$this->getOnlineId()) {
-				throw new ServiceException('Für die Expose-Anfrage muss eine OnlineId Gesetzt sein.', 1414489683);
-			}
+    curl_close($ch);
 
-			$ch = curl_init();
+    if ($result != 'true') {
+      throw new ServiceException('Kontaktanfrage konnte nicht verschickt werden', 1414761744);
+    }
+  }
 
-			curl_setopt_array(
-				$ch,
-				array(
-					CURLOPT_URL            => $this->buildRequestUrl() . '/inquiry',
-					CURLOPT_POST           => 1,
-					CURLOPT_RETURNTRANSFER => 1,
-					CURLOPT_POSTFIELDS     => $this->getInquiryRequestData($form),
-					CURLOPT_HTTPHEADER     => $this->getRequestHeaders()
-				)
-			);
+  /**
+   * @return string
+   */
+  public function getOnlineId() {
+    return $this->onlineId;
+  }
 
-			$result = curl_exec($ch);
+  /**
+   * @param string $onlineId
+   *
+   * @return $this
+   */
+  public function setOnlineId($onlineId) {
+    $this->onlineId = $onlineId;
 
-			curl_close($ch);
+    /** Workaroud weil guid kein parameter ist, sondern teil der URL */
+    $this->functionName .= '/' . $this->onlineId;
 
-			if ($result != 'true') {
-				throw new ServiceException('Kontaktanfrage konnte nicht verschickt werden', 1414761744);
-			}
-		}
+    return $this;
+  }
 
-		/**
-		 * @param array $form
-		 *
-		 * @return string
-		 */
-		protected function getInquiryRequestData(array $form) {
+  /**
+   * @param array $form
+   *
+   * @return string
+   */
+  protected function getInquiryRequestData(array $form) {
 
-			$requestArray = array();
+    $requestArray = [];
 
-			$allowedFields = array(
-			    'salutation',
-				'lastName',
-				'firstName',
-				'email',
-				'phone',
-				'street',
-				'zip',
-				'city',
-				'mobile',
-				'fax',
-				'message'
-			);
+    $allowedFields = [
+      'salutation',
+      'lastName',
+      'firstName',
+      'email',
+      'phone',
+      'street',
+      'zip',
+      'city',
+      'mobile',
+      'fax',
+      'message',
+    ];
 
-			foreach ($allowedFields as $fieldName) {
-				if (isset($form[$fieldName]) && !empty($form[$fieldName])) {
-					$requestArray[$fieldName] = $form[$fieldName];
-				}
-			}
+    foreach ($allowedFields as $fieldName) {
+      if (isset($form[$fieldName]) && !empty($form[$fieldName])) {
+        $requestArray[$fieldName] = $form[$fieldName];
+      }
+    }
 
 
-			$requestArray['domain'] = $this->settings['contact']['domain'] ?: '';
+    $requestArray['domain'] = $this->settings['contact']['domain'] ?: '';
 
-			return json_encode($requestArray);
-		}
-	}
+    return json_encode($requestArray);
+  }
 
-	?>
+}

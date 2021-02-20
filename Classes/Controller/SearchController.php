@@ -23,35 +23,34 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-    namespace IWAG\IwImmo\Controller;
-    use TYPO3\CMS\Core\Utility\GeneralUtility;
+namespace IWAG\IwImmo\Controller;
 
-    /**
-     * Class SearchController
-     *
-     * @package IWAG\IwImmo\Controller
-     */
-    class SearchController extends BaseController {
+use Exception;
 
-        /**
-         *
-         */
-        public function indexAction() {
-            try {
-                /** @var \IWAG\IwImmo\Service\Geo\AutocompleteService $autocompleteService */
-                $autocompleteService = $this->objectManager->get('IWAG\\IwImmo\\Service\\Geo\\AutocompleteService');
+/**
+ * Class SearchController
+ *
+ * @package IWAG\IwImmo\Controller
+ */
+class SearchController extends BaseController {
 
-                $autocompleteService->setCountryGeoId($this->settings['list']['parameters']['geoid']);
+  /**
+   *
+   */
+  public function indexAction() {
+    try {
+      /** @var \IWAG\IwImmo\Service\Geo\AutocompleteService $autocompleteService */
+      $autocompleteService = $this->objectManager->get('IWAG\\IwImmo\\Service\\Geo\\AutocompleteService');
 
-            } catch (\Exception $e) {
-                $autocompleteService = NULL;
-                $this->logger->error($e->getCode() . ': ' . $e->getMessage());
-            }
+      $autocompleteService->setCountryGeoId($this->settings['list']['parameters']['geoid']);
 
-            $this->view->assign('autocompleteService', $autocompleteService);
-        }
-
-
+    } catch (Exception $e) {
+      $autocompleteService = NULL;
+      $this->logger->error($e->getCode() . ': ' . $e->getMessage());
     }
 
-    ?>
+    $this->view->assign('autocompleteService', $autocompleteService);
+  }
+
+
+}

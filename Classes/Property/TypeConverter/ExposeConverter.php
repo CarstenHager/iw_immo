@@ -1,70 +1,73 @@
 <?php
-    /***************************************************************
-    *  Copyright notice
-    *
-    *  (c) 2016 Immowelt AG <support@immowelt.de>
-    *  All rights reserved
-    *
-    *  This script is part of the TYPO3 project. The TYPO3 project is
-    *  free software; you can redistribute it and/or modify
-    *  it under the terms of the GNU General Public License as published by
-    *  the Free Software Foundation; either version 2 of the License, or
-    *  (at your option) any later version.
-    *
-    *  The GNU General Public License can be found at
-    *  http://www.gnu.org/copyleft/gpl.html.
-    *
-    *  This script is distributed in the hope that it will be useful,
-    *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-    *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    *  GNU General Public License for more details.
-    *
-    *  This copyright notice MUST APPEAR in all copies of the script!
-    ***************************************************************/
-	namespace IWAG\IwImmo\Property\TypeConverter;
+/***************************************************************
+ *  Copyright notice
+ *
+ *  (c) 2016 Immowelt AG <support@immowelt.de>
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
-    use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
-	use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
+namespace IWAG\IwImmo\Property\TypeConverter;
 
-
-	if (!defined ('TYPO3_MODE')) die ('Access denied.');
+use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
+use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 
 
-	/**
-	 * Class ExposeConverter
-	 *
-	 * @package IWAG\IwImmo\Property\TypeConverter
-	 */
-	class ExposeConverter extends AbstractTypeConverter{
+if (!defined('TYPO3_MODE')) {
+  die ('Access denied.');
+}
 
-		/**
-		 * @var array
-		 */
-		protected $sourceTypes = array('string');
 
-		/**
-		 * @var string
-		 */
-		protected $targetType = 'IWAG\IwImmo\ResultObjects\Exposes\Expose';
+/**
+ * Class ExposeConverter
+ *
+ * @package IWAG\IwImmo\Property\TypeConverter
+ */
+class ExposeConverter extends AbstractTypeConverter {
 
-		/**
-		 *
-		 * @param mixed                                 $source
-		 * @param string                                $targetType
-		 * @param array                                 $convertedChildProperties
-		 * @param PropertyMappingConfigurationInterface $configuration
-		 *
-		 * @return mixed|void
-		 */
-		public function convertFrom($source, $targetType, array $convertedChildProperties = array(), PropertyMappingConfigurationInterface $configuration = NULL) {
+  /**
+   * @var array
+   */
+  protected $sourceTypes = ['string'];
 
-			/** @var IWAG\IwImmo\Service\Expose\ExposeService $exposeService */
-			$exposeService = $this->objectManager->get('IWAG\IwImmo\Service\Expose\ExposeService');
-			$exposeService->setOnlineId($source);
+  /**
+   * @var string
+   */
+  protected $targetType = 'IWAG\IwImmo\ResultObjects\Exposes\Expose';
 
-			$targetObject = $exposeService->execute();
+  /**
+   *
+   * @param mixed $source
+   * @param string $targetType
+   * @param array $convertedChildProperties
+   * @param PropertyMappingConfigurationInterface $configuration
+   *
+   * @return mixed|void
+   */
+  public function convertFrom($source, $targetType, array $convertedChildProperties = [], PropertyMappingConfigurationInterface $configuration = NULL) {
 
-			return $targetObject;
-		}
-	}
-?>
+    /** @var IWAG\IwImmo\Service\Expose\ExposeService $exposeService */
+    $exposeService = $this->objectManager->get('IWAG\IwImmo\Service\Expose\ExposeService');
+    $exposeService->setOnlineId($source);
+
+    $targetObject = $exposeService->execute();
+
+    return $targetObject;
+  }
+
+}
