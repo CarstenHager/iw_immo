@@ -1,5 +1,10 @@
 <?php
 
+use IWAG\IwImmo\Controller\SearchController;
+use IWAG\IwImmo\Controller\ListController;
+use IWAG\IwImmo\Controller\DetailController;
+use IWAG\IwImmo\Controller\ContactController;
+use IWAG\IwImmo\Controller\CalculatorController;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -23,53 +28,53 @@ try {
 }
 
 ExtensionUtility::configurePlugin(
-  'IWAG.' . $_EXTKEY,
+  'IwImmo',
   'search',
   [
-    'Search' => 'index',
+    SearchController::class => 'index',
   ],
   [
-    'Search' => 'index',
+    SearchController::class => 'index',
   ]
 );
 ExtensionUtility::configurePlugin(
-  'IWAG.' . $_EXTKEY,
+  'IwImmo',
   'list',
   [
-    'List' => 'index',
+    ListController::class => 'index',
   ],
   [
-    'List' => 'index',
+    ListController::class => 'index',
   ]
 );
 ExtensionUtility::configurePlugin(
-  'IWAG.' . $_EXTKEY,
+  'IwImmo',
   'detail',
   [
-    'Detail' => 'show',
+    DetailController::class => 'show',
   ],
   [
-    'Detail' => 'show',
+    DetailController::class => 'show',
   ]
 );
 ExtensionUtility::configurePlugin(
-  'IWAG.' . $_EXTKEY,
+  'IwImmo',
   'contact',
   [
-    'Contact' => 'index,confirmation,send',
+    ContactController::class => 'index,confirmation,send',
   ],
   [
-    'Contact' => 'index,confirmation,send',
+    ContactController::class => 'index,confirmation,send',
   ]
 );
 ExtensionUtility::configurePlugin(
-  'IWAG.' . $_EXTKEY,
+  'IwImmo',
   'calculator',
   [
-    'Calculator' => 'index',
+    CalculatorController::class => 'index',
   ],
   [
-    'Calculator' => 'index',
+    CalculatorController::class => 'index',
   ]
 );
 
@@ -80,7 +85,7 @@ if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['iw_immo']['apiDomain']) || em
 if ($confArr['includeJQueryUI'] != 0) {
 
   if ($confArr['includeJQueryUILocalization'] == 1) {
-    ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
+    ExtensionManagementUtility::addTypoScript('iw_immo', 'setup', '
             page.includeJSlibs {
                 #jqueryUIlocalization = https://ajax.aspnetcdn.com/ajax/jquery.ui/' . trim($confArr['includeJQueryUI']) . '/i18n/jquery-ui-i18n.min.js
                 jqueryUIlocalization = //ajax.googleapis.com/ajax/libs/jqueryui/' . trim($confArr['includeJQueryUI']) . '/i18n/jquery-ui-i18n.min.js
@@ -94,7 +99,7 @@ if ($confArr['includeJQueryUI'] != 0) {
   }
 
   if ($confArr['includeJQueryUIStyles'] == 1) {
-    ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
+    ExtensionManagementUtility::addTypoScript('iw_immo', 'setup', '
             page.includeCSS {
                 #jqueryUiStyles = http://code.jquery.com/ui/' . trim($confArr['includeJQueryUI']) . '/themes/smoothness/jquery-ui.css
                 jqueryUiStyles = //ajax.googleapis.com/ajax/libs/jqueryui/' . trim($confArr['includeJQueryUI']) . '/themes/smoothness/jquery-ui.css
@@ -105,7 +110,7 @@ if ($confArr['includeJQueryUI'] != 0) {
         ');
   }
 
-  ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
+  ExtensionManagementUtility::addTypoScript('iw_immo', 'setup', '
             page.includeJSlibs {
                 #jqueryUI = http://ajax.aspnetcdn.com/ajax/jquery.ui/' . trim($confArr['includeJQueryUI']) . '/jquery-ui.min.js
                 jqueryUI = //ajax.googleapis.com/ajax/libs/jqueryui/' . trim($confArr['includeJQueryUI']) . '/jquery-ui.min.js
@@ -120,7 +125,7 @@ if ($confArr['includeJQueryUI'] != 0) {
 
 // jQuery Validation einbinden
 if ($confArr['includeJQueryValidation'] != 0) {
-  ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
+  ExtensionManagementUtility::addTypoScript('iw_immo', 'setup', '
             page.includeJSlibs {
                 # das gibts nur von MS
                 jqueryValidation = //ajax.aspnetcdn.com/ajax/jquery.validate/' . trim($confArr['includeJQueryValidation']) . '/jquery.validate.min.js
@@ -134,7 +139,7 @@ if ($confArr['includeJQueryValidation'] != 0) {
 }
 
 if ($confArr['includeJQuery'] != 0) {
-  ExtensionManagementUtility::addTypoScript($_EXTKEY, 'setup', '
+  ExtensionManagementUtility::addTypoScript('iw_immo', 'setup', '
             page.includeJSlibs {
                 #jquery = http://ajax.aspnetcdn.com/ajax/jQuery/jquery-' . trim($confArr['includeJQuery']) . '.min.js
                 jquery = //ajax.googleapis.com/ajax/libs/jquery/' . trim($confArr['includeJQuery']) . '/jquery.min.js
@@ -152,8 +157,8 @@ ExtensionUtility::registerTypeConverter('IWAG\IwImmo\Property\TypeConverter\Expo
 
 
 // cache registrieren für objekte
-if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$_EXTKEY . '_api'])) {
-  $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$_EXTKEY . '_api'] = [
+if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['iw_immo' . '_api'])) {
+  $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['iw_immo' . '_api'] = [
     'backend' => '\TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend',
   ];
 }

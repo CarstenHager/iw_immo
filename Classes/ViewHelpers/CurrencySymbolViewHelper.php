@@ -33,24 +33,29 @@ if (!defined('TYPO3_MODE')) {
 class CurrencySymbolViewHelper extends AbstractViewHelper {
 
   /**
-   * @param string $currency
    *
    * @return string
    */
-  public function render($currency = '') {
-    if ($currency == '') {
-      $currency = $this->renderChildrenClosure;
-    }
+  public function render()
+  {
+      $currency = $this->arguments['currency'];
+      if ($currency == '') {
+        $currency = $this->renderChildrenClosure;
+      }
+      switch ($currency) {
+        case 'EUR':
+          $currency = '€';
+          break;
+  
+        // todo: welche noch?
+      }
+      return $currency;
+  }
 
-    switch ($currency) {
-      case 'EUR':
-        $currency = '€';
-        break;
-
-      // todo: welche noch?
-    }
-
-    return $currency;
+  public function initializeArguments(): void
+  {
+      parent::initializeArguments();
+      $this->registerArgument('currency', 'string', '', false, '');
   }
 
 }

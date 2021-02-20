@@ -31,6 +31,7 @@ use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 
 if (!defined('TYPO3_MODE')) {
   die ('Access denied.');
@@ -46,7 +47,7 @@ class BaseController extends ActionController {
   /**
    * @var Logger
    */
-  protected $logger;
+  protected Logger $logger;
 
   public function injectLogger(LogManager $logManager) {
     $this->logger = $logManager->getLogger(__CLASS__);
@@ -68,7 +69,7 @@ class BaseController extends ActionController {
   /**
    * @return string|void
    */
-  public function errorAction() {
+  public function errorAction(): string {
 
   }
 
@@ -88,13 +89,14 @@ class BaseController extends ActionController {
       else {
         throw new $e;
       }
+    } catch (StopActionException $e) {
     }
   }
 
   /**
    * @return string
    */
-  protected function getDisclaimer() {
+  protected function getDisclaimer(): string {
     return '<div class="poweredby"><a href="http://www.immowelt.de" title="Immobilienportal Immowelt.de" rel="nofollow">Immobilien-Daten bereitgestellt von Immowelt.de</a> <img src="typo3conf/ext/iw_immo/Resources/Public/Images/powered-by-iw.jpg" alt="immowelt.de"></div><div class="clearfix"></div>';
   }
 

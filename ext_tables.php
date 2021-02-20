@@ -31,44 +31,44 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
-$extensionName = GeneralUtility::underscoredToUpperCamelCase($_EXTKEY);
+$extensionName = GeneralUtility::underscoredToUpperCamelCase('iw_immo');
 
-ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', $_EXTKEY);
+ExtensionManagementUtility::addStaticFile('iw_immo', 'Configuration/TypoScript', 'iw_immo');
 
 // Suche
-ExtensionUtility::registerPlugin($_EXTKEY, 'search', 'LLL:EXT:iw_immo/Resources/Private/Language/locallang.xlf:plugin.search.label');
+ExtensionUtility::registerPlugin('iw_immo', 'search', 'LLL:EXT:iw_immo/Resources/Private/Language/locallang.xlf:plugin.search.label');
 $pluginSignature = strtolower($extensionName) . '_search';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/Search.xml');
+ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . 'iw_immo' . '/Configuration/FlexForms/Search.xml');
 
 // Liste
-ExtensionUtility::registerPlugin($_EXTKEY, 'list', 'LLL:EXT:iw_immo/Resources/Private/Language/locallang.xlf:plugin.list.label');
+ExtensionUtility::registerPlugin('iw_immo', 'list', 'LLL:EXT:iw_immo/Resources/Private/Language/locallang.xlf:plugin.list.label');
 $pluginSignature = strtolower($extensionName) . '_list';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/List.xml');
+ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . 'iw_immo' . '/Configuration/FlexForms/List.xml');
 
 // Detail
-ExtensionUtility::registerPlugin($_EXTKEY, 'detail', 'LLL:EXT:iw_immo/Resources/Private/Language/locallang.xlf:plugin.detail.label');
+ExtensionUtility::registerPlugin('iw_immo', 'detail', 'LLL:EXT:iw_immo/Resources/Private/Language/locallang.xlf:plugin.detail.label');
 $pluginSignature = strtolower($extensionName) . '_detail';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/Detail.xml');
+ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . 'iw_immo' . '/Configuration/FlexForms/Detail.xml');
 
 // Contact
-ExtensionUtility::registerPlugin($_EXTKEY, 'contact', 'LLL:EXT:iw_immo/Resources/Private/Language/locallang.xlf:plugin.contact.label');
+ExtensionUtility::registerPlugin('iw_immo', 'contact', 'LLL:EXT:iw_immo/Resources/Private/Language/locallang.xlf:plugin.contact.label');
 $pluginSignature = strtolower($extensionName) . '_contact';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/Contact.xml');
+ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . 'iw_immo' . '/Configuration/FlexForms/Contact.xml');
 
 // Rechner
-ExtensionUtility::registerPlugin($_EXTKEY, 'calculator', 'LLL:EXT:iw_immo/Resources/Private/Language/locallang.xlf:plugin.calculator.label');
+ExtensionUtility::registerPlugin('iw_immo', 'calculator', 'LLL:EXT:iw_immo/Resources/Private/Language/locallang.xlf:plugin.calculator.label');
 $pluginSignature = strtolower($extensionName) . '_calculator';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/Calculator.xml');
+ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . 'iw_immo' . '/Configuration/FlexForms/Calculator.xml');
 
 // iwcontent direkt bei plugin hinzufügen als icon anzeigen
 if (TYPO3_MODE == 'BE') {

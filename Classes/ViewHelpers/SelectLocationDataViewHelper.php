@@ -33,21 +33,24 @@ if (!defined('TYPO3_MODE')) {
 class SelectLocationDataViewHelper extends AbstractViewHelper {
 
   /**
-   * @param array $locationData
    *
    * @return array
    */
-  public function render($locationData = []) {
+  public function render()
+  {
+      $locationData = $this->arguments['locationData'];
+      $locationDataForSelect = [];
+      foreach ($locationData as $location) {
+        $locationDataForSelect[$location['geoId']] = $location['name'];
+  
+      }
+      return $locationDataForSelect;
+  }
 
-    $locationDataForSelect = [];
-
-    foreach ($locationData as $location) {
-      $locationDataForSelect[$location['geoId']] = $location['name'];
-
-    }
-
-    return $locationDataForSelect;
-
+  public function initializeArguments(): void
+  {
+      parent::initializeArguments();
+      $this->registerArgument('locationData', 'array', '', false);
   }
 
 }

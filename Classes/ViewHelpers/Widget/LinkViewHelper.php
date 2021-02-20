@@ -39,8 +39,8 @@ class LinkViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Widget\LinkViewHelper 
    * @return string
    */
   protected function getWidgetUri() {
-    $uriBuilder = $this->controllerContext->getUriBuilder();
-    $argumentPrefix = $this->controllerContext->getRequest()
+    $uriBuilder = $this->renderingContext->getControllerContext()->getUriBuilder();
+    $argumentPrefix = $this->renderingContext->getControllerContext()->getRequest()
       ->getArgumentPrefix();
     $arguments = $this->hasArgument('arguments') ? $this->arguments['arguments'] : [];
     if ($this->hasArgument('action')) {
@@ -53,8 +53,8 @@ class LinkViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Widget\LinkViewHelper 
     //				$arguments['addQueryStringMethod'] = $this->arguments['addQueryStringMethod'];
     //			}
 
-    if ($this->controllerContext->getRequest()->hasArgument('sorting')) {
-      $arguments['sorting'] = $this->controllerContext->getRequest()
+    if ($this->renderingContext->getControllerContext()->getRequest()->hasArgument('sorting')) {
+      $arguments['sorting'] = $this->renderingContext->getControllerContext()->getRequest()
         ->getArgument('sorting');
     }
 
