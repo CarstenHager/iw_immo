@@ -46,7 +46,7 @@ class SearchController extends BaseController {
 
     } catch (Exception $e) {
       $autocompleteService = NULL;
-      $this->logger->error($e->getCode() . ': ' . $e->getMessage());
+//      $this->logger->error($e->getCode() . ': ' . $e->getMessage());
     }
 
     $this->view->assign('autocompleteService', $autocompleteService);

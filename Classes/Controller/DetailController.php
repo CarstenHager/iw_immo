@@ -65,9 +65,9 @@ class DetailController extends BaseController {
     // TODO: Use new title API
     // $pageRenderer->setTitle($expose->getTitle());
 
-    GeneralUtility::makeInstance(MetaTagManagerRegistry::class)
-      ->getManagerForProperty('canonical')
-      ->addProperty('canonical', 'http://www.immowelt.de/expose/' . $expose->getId() . '');
+//    GeneralUtility::makeInstance(MetaTagManagerRegistry::class)
+//      ->getManagerForProperty('canonical')
+//      ->addProperty('canonical', 'http://www.immowelt.de/expose/' . $expose->getId() . '');
   }
 
 }

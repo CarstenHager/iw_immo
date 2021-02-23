@@ -83,7 +83,7 @@ class BaseController extends ActionController {
 
     } catch (ServiceException $e) {
       if (get_class($e) != 'IWAG\IwImmo\Service\Exception\ApiKeyMissingException') {
-        $this->logger->error($e->getCode() . ': ' . $e->getMessage());
+//        $this->logger->error($e->getCode() . ': ' . $e->getMessage());
         $this->forward('error');
       }
       else {
